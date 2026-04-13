@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iscriviti alla Live — Nabla Invest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #060606;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            right: -15%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(164, 228, 179, 0.08) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -10%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(164, 228, 179, 0.05) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(164, 228, 179, 0.08);
+            border: 1px solid rgba(164, 228, 179, 0.15);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #a4e4b3;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .badge-dot {
+            width: 6px; height: 6px;
+            background: #a4e4b3;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        h1 .accent { color: #a4e4b3; }
+
+        .subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            border-color: rgba(164, 228, 179, 0.4);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 0 0 3px rgba(164, 228, 179, 0.08);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .select-group {
+            margin-bottom: 20px;
+        }
+
+        .select-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .radio-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .radio-option:hover {
+            border-color: rgba(164, 228, 179, 0.2);
+            background: rgba(164, 228, 179, 0.04);
+        }
+
+        .radio-option input[type="radio"] { display: none; }
+
+        .radio-option .radio-dot {
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .radio-option input:checked + .radio-dot {
+            border-color: #a4e4b3;
+        }
+
+        .radio-option input:checked + .radio-dot::after {
+            content: '';
+            position: absolute;
+            top: 3px; left: 3px;
+            width: 8px; height: 8px;
+            background: #a4e4b3;
+            border-radius: 50%;
+        }
+
+        .radio-option input:checked ~ span:last-child {
+            color: #ffffff;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: #a4e4b3;
+            color: #060606;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 8px;
+        }
+
+        .submit-btn:hover {
+            background: #99ffc2;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(164, 228, 179, 0.2);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .disclaimer {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.2);
+            margin-top: 16px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .success-msg {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .success-msg .check {
+            width: 64px; height: 64px;
+            background: rgba(164, 228, 179, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+        }
+
+        .success-msg h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .success-msg p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .success-msg .wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #a4e4b3;
+            color: #060606;
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .success-msg .wa-btn:hover {
+            background: #99ffc2;
+            transform: translateY(-2px);
+        }
+
+        .success-msg .wa-btn svg { width: 18px; height: 18px; }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+
+    <div id="formSection">
+        <div class="badge">
+            <span class="badge-dot"></span>
+            Live gratuita — 22 aprile
+        </div>
+
+        <h1>Il mercato sta scendendo.<br><span class="accent">Vuoi vedere come lavoriamo?</span></h1>
+
+        <p class="subtitle">Iscriviti alla live del 22 aprile alle 21. Accendiamo gli indicatori Nabla e analizziamo il mercato in diretta.</p>
+
+        <form id="leadForm" onsubmit="return submitForm(event)">
+            <div class="form-group">
+                <label>Nome</label>
+                <input type="text" id="field_nome" placeholder="Il tuo nome" required>
+            </div>
+
+            <div class="form-group">
+                <label>Cognome</label>
+                <input type="text" id="field_cognome" placeholder="Il tuo cognome" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="field_email" placeholder="La tua email" required>
+            </div>
+
+            <div class="form-group">
+                <label>Telefono</label>
+                <input type="tel" id="field_telefono" placeholder="+39..." required>
+            </div>
+
+            <div class="select-group">
+                <span class="select-label">Investi già sui mercati?</span>
+                <div class="radio-options">
+                    <label class="radio-option">
+                        <input type="radio" name="investi" value="Non ancora" required>
+                        <span class="radio-dot"></span>
+                        <span>Non ancora</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="investi" value="Sì">
+                        <span class="radio-dot"></span>
+                        <span>Sì</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="select-group">
+                <span class="select-label">Se sì, da quanto tempo?</span>
+                <div class="radio-options">
+                    <label class="radio-option">
+                        <input type="radio" name="da_quanto" value="Meno di un anno">
+                        <span class="radio-dot"></span>
+                        <span>Meno di un anno</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="da_quanto" value="1-2 anni">
+                        <span class="radio-dot"></span>
+                        <span>1-2 anni</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="da_quanto" value="Più di 2 anni">
+                        <span class="radio-dot"></span>
+                        <span>Più di 2 anni</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="select-group">
+                <span class="select-label">Cosa cerchi principalmente?</span>
+                <div class="radio-options">
+                    <label class="radio-option">
+                        <input type="radio" name="cosa_cerchi" value="Un metodo per diventare autonomo" required>
+                        <span class="radio-dot"></span>
+                        <span>Un metodo per diventare autonomo</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="cosa_cerchi" value="Strumenti per analizzare meglio">
+                        <span class="radio-dot"></span>
+                        <span>Strumenti per analizzare meglio</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="cosa_cerchi" value="Una community seria">
+                        <span class="radio-dot"></span>
+                        <span>Una community seria</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="cosa_cerchi" value="Non so ancora">
+                        <span class="radio-dot"></span>
+                        <span>Non so ancora</span>
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Iscrivimi alla live del 22 aprile</button>
+
+            <p class="disclaimer">
+                I contenuti della live sono a scopo educativo. Non costituiscono consulenza finanziaria.<br>
+                Nabla Invest SRL
+            </p>
+        </form>
+    </div>
+
+    <div class="success-msg" id="successSection">
+        <div class="check">✓</div>
+        <h2>Ci vediamo il 22 aprile.</h2>
+        <p>
+            Entra nel gruppo WhatsApp dove manderemo il link per collegarti alla live.
+            Martedì 22 alle 21 apriamo TradingView e lavoriamo sul mercato in diretta.
+        </p>
+        <a href="https://chat.whatsapp.com/C6eiTgeVSrQ0WcU7wbAhpH" class="wa-btn" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Entra nel gruppo WhatsApp
+        </a>
+    </div>
+
+</div>
+
+<!-- iframe nascosto per il submit -->
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+
+<script>
+    // Google Form IDs
+    const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd57J_yrZpOosPPdu-NF6mrd7Lu2yPcNRtXJCQQEWt_Fhayrw/formResponse";
+
+    function submitForm(e) {
+        e.preventDefault();
+
+        var btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Invio in corso...';
+
+        // Raccogli i dati
+        var nome = document.getElementById('field_nome').value;
+        var cognome = document.getElementById('field_cognome').value;
+        var email = document.getElementById('field_email').value;
+        var telefono = document.getElementById('field_telefono').value;
+        var investi = document.querySelector('input[name="investi"]:checked');
+        var da_quanto = document.querySelector('input[name="da_quanto"]:checked');
+        var cosa_cerchi = document.querySelector('input[name="cosa_cerchi"]:checked');
+
+        // Crea un form nascosto che punta al Google Form
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = GOOGLE_FORM_URL;
+        form.target = 'hidden_iframe';
+
+        var fields = {
+            'entry.708762994': nome,
+            'entry.46535133': cognome,
+            'entry.464243217': email,
+            'entry.593806552': telefono,
+            'entry.777854567': investi ? investi.value : '',
+            'entry.1716220724': da_quanto ? da_quanto.value : '',
+            'entry.1980509175': cosa_cerchi ? cosa_cerchi.value : ''
+        };
+
+        for (var key in fields) {
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = key;
+            input.value = fields[key];
+            form.appendChild(input);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+
+        // Mostra successo dopo un breve delay
+        setTimeout(function() {
+            document.getElementById('formSection').style.display = 'none';
+            document.getElementById('successSection').style.display = 'block';
+        }, 1000);
+
+        return false;
+    }
+</script>
+
+</body>
+</html>
