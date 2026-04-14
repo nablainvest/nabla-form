@@ -430,39 +430,31 @@
         var da_quanto = document.querySelector('input[name="da_quanto"]:checked');
         var cosa_cerchi = document.querySelector('input[name="cosa_cerchi"]:checked');
 
-        // Crea un form nascosto che punta al Google Form
-        var form = document.createElement('form');
-        form.method = 'POST';
-        form.action = GOOGLE_FORM_URL;
-        form.target = 'hidden_iframe';
+        // Costruisci URL con parametri
+        var params = new URLSearchParams();
+        params.append('entry.708762994', nome);
+        params.append('entry.46535133', cognome);
+        params.append('entry.464243217', email);
+        params.append('entry.593806552', telefono);
+        params.append('entry.777854567', investi ? investi.value : '');
+        params.append('entry.1716220724', da_quanto ? da_quanto.value : '');
+        params.append('entry.1980509175', cosa_cerchi ? cosa_cerchi.value : '');
 
-        var fields = {
-            'entry.708762994': nome,
-            'entry.46535133': cognome,
-            'entry.464243217': email,
-            'entry.593806552': telefono,
-            'entry.777854567': investi ? investi.value : '',
-            'entry.1716220724': da_quanto ? da_quanto.value : '',
-            'entry.1980509175': cosa_cerchi ? cosa_cerchi.value : ''
-        };
+        // Invia tramite fetch no-cors
+        fetch(GOOGLE_FORM_URL + '?' + params.toString(), {
+            method: 'GET',
+            mode: 'no-cors'
+        });
 
-        for (var key in fields) {
-            var input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = key;
-            input.value = fields[key];
-            form.appendChild(input);
-        }
+        // Invia anche tramite iframe come backup
+        var iframe = document.getElementById('hidden_iframe');
+        iframe.src = GOOGLE_FORM_URL + '?' + params.toString();
 
-        document.body.appendChild(form);
-        form.submit();
-        document.body.removeChild(form);
-
-        // Mostra successo dopo un breve delay
+        // Mostra successo
         setTimeout(function() {
             document.getElementById('formSection').style.display = 'none';
             document.getElementById('successSection').style.display = 'block';
-        }, 1000);
+        }, 1500);
 
         return false;
     }
